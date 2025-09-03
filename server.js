@@ -7,7 +7,7 @@ app.use(cors());
 app.use(express.json());
 
 // MongoDB connection
-const uri = "mongodb+srv://alexanderjacob1107aj_db_user:21nK0GS4xGcBkLAO@petstats.ujgum8l.mongodb.net/?retryWrites=true&w=majority&appName=PetStats"
+const uri = process.env.MONGODB_URI;
 const client = new MongoClient(uri);
 let collection;
 
@@ -43,4 +43,5 @@ app.get("/load/:playerId", async (req, res) => {
 });
 
 const PORT = 3000;
+
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));

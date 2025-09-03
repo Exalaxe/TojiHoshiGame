@@ -217,13 +217,29 @@ function applyOfflineDecay(pet, lastUpdate) {
 }
 
 
-const API_URL = "http://localhost:3000"; // change to your deployed server later
+const API_URL = "https://tojihoshigame.onrender.com"; // change to your deployed server later
 
 // Save Toji & Hoshi to MongoDB
+function getPetSaveData(pet) {
+    return {
+        name: pet.name,
+        level: pet.level,
+        exp: pet.exp,
+        feedExp: pet.feedExp,
+        playExp: pet.playExp,
+        cleanExp: pet.cleanExp,
+        sleepExp: pet.sleepExp,
+        feedLvlExp: pet.feedLvlExp,
+        playLvlExp: pet.playLvlExp,
+        cleanLvlExp: pet.cleanLvlExp,
+        sleepLvlExp: pet.sleepLvlExp
+    };
+}
+
 async function saveProgressToServer(playerId) {
     const petData = {
-        toji,
-        hoshi
+        toji: getPetSaveData(toji),
+        hoshi: getPetSaveData(hoshi)
     };
 
     try {
@@ -232,11 +248,12 @@ async function saveProgressToServer(playerId) {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ playerId, data: petData })
         });
-        console.log("Progress saved");
+        console.log("Progress saved to MongoDB");
     } catch (err) {
         console.error("Save failed", err);
     }
 }
+
 
 // Load Toji & Hoshi from MongoDB
 async function loadProgressFromServer(playerId) {
